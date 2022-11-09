@@ -1,6 +1,8 @@
 //const { catchAsync } = require ('../util/catchAsync')
 //const { AppError } = require ('../util/AppError')
 const axios = require('axios');
+const { transporter } = require('../util/mailer');
+const { template } = require('../util/template');
 
 
 exports.covidrequired = async(req, res) => {
@@ -32,6 +34,26 @@ exports.covidrequired = async(req, res) => {
 }
 
 exports.sendNotification = async(req, res) => {
-    
 
+    const { destinatarios, mensaje } = req.body
+    console.log(destinatarios)
+
+    await transporter.verify().then(() => {
+        console.log('Ready for send emails');
+    })
+
+    let info = await transporter.sendMail({
+        from: '"Javier Rodrigo Fonseca Leal" <javier_fonseca@lax.com>', // sender address
+        //to: ["javier_fonsi@hotmail.com", "paolita943@hotmail.com","javierrfl1985@gmail.com"], // list of receivers
+        to: destinatarios, // list of receivers
+        subject: "Correo desde node LAX AGENCY", // Subject line
+        text: `${mensaje}` , // plain text body
+        html: `${mensaje}, ${template}` // html body
+      });
+    
+      console.log("Message sent: %s", info.messageId);
+      res.status(201).json({
+        status:'success',
+        data: mensaje
+      })
 }

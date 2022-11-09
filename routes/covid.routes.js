@@ -1,12 +1,12 @@
 const express = require('express');
 
-const { covidrequired } = require('../controllers/covid.controller');
+const { covidrequired, sendNotification } = require('../controllers/covid.controller');
 //const { createPublish, maxpublish } = require('../controllers/publish.controller');
 
 //const { validateSession } = require('../middlewares/auth.middleware');
 //const { createPublishValidators, validateResult } = require('../middlewares/validators.middleware');
 
-//publish schema
+//reportDaily schema
 /**
  * @swagger
  * components:
