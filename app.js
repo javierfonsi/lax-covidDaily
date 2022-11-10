@@ -27,8 +27,8 @@ const swaggerSpec = {
     definition:{
         openapi: '3.0.3',
         info: {
-            title: "SocialNetworkTelemática API",
-            description: "This is delivery server test designed as input text in lax, based on the OpenAPI 3.0 specification. The user create an account, then is logged and add the message, publisment and add sales in order to share with other user from farmaceutic laboratories, medical services and pharmacy",
+            title: "Covid report API for LAX",
+            description: "This is delivery server test designed as input text in lax, based on the OpenAPI 3.0 specification. ",
             contact: {
                 "name": "Javier Rodrigo Fonseca Leal",
                 "url": "https://portafolio-javierfonseca.netlify.app/",

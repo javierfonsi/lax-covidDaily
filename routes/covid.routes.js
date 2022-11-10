@@ -76,7 +76,7 @@ router.get('/coviddaily', covidrequired);
 //send a email
 /**
  * @swagger
- * /api/v1/sendnotification/:
+ * /api/v1/sendnofication/:
  *  post:
  *    summary: allow to create an email to address and their content 
  *    tags: [email]
