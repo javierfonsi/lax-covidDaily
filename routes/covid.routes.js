@@ -1,10 +1,6 @@
 const express = require('express');
 
 const { covidrequired, sendNotification } = require('../controllers/covid.controller');
-//const { createPublish, maxpublish } = require('../controllers/publish.controller');
-
-//const { validateSession } = require('../middlewares/auth.middleware');
-//const { createPublishValidators, validateResult } = require('../middlewares/validators.middleware');
 
 //reportDaily schema
 /**
@@ -16,66 +12,90 @@ const { covidrequired, sendNotification } = require('../controllers/covid.contro
  *     scheme: bearer
  *     bearerFormat: JWT
  *  schemas:
- *     publish:
+ *     case:
  *        type: object
  *        properties:
- *          product:
+ *          Date:
  *              type: string
- *              description: This field must be product name
- *              max-length: 50 chars
- *          description:
- *              type: string
- *              description: Description product
- *              max-length: 255 chars
- *          userId:
+ *              description: According to date
+ *          Positivos:
  *              type: Integer
- *              description: identify the product with a user
- *        required:
- *          - product
- *          - description
- *          - userId
+ *              description: Quantity confirmed cases people
+ *          Negativos:
+ *              type: Integer
+ *              description: Quantity unconfirmed cases people
+ *          Pendiente:
+ *              type: Integer
+ *              description: Quantity that ther not confirmed cases people
+ *          Muertes:
+ *              type: Integer
+ *              description: Quantity confirmed death people
  *        example:
- *          product: Advil
- *          description: medicamento de uso general
- *          userId: 1
+ *          Date: 20210307,
+ *          Positivos: 28756489,
+ *          Negativos: 74582825,
+ *          Pendientes: 11808,
+ *          Muertes: 515151
+ *     email:
+ *        type: object
+ *        properties:
+ *          destinatarios:
+ *              type: array
+ *              description: According to email addresses
+ *          mensaje:
+ *              type: string
+ *              description: According to message content email
+ *        example:
+ *          destinatarios: [javierrfl1985@gmail.com, javier_fonsi@hotmail.com]
+ *          mensaje: Este corresponde a un mensaje de prueba.
  */
 
 const router = express.Router();
 
-//router.use(validateSession);
 
-//Create publish
+//View covid daily
 /**
  * @swagger
- * /api/v1/publish/:
+ * /api/v1/coviddaily/:
+ *  get:
+ *    summary: return an array with info 
+ *    tags: [case]
+ *    responses:
+ *      200:
+ *        description: return the info created
+ *        content:
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  items:
+ *                    $ref: '#/components/schemas/case'
+ */
+//router.post('/', createPublishValidators, validateResult, createPublish)
+router.get('/coviddaily', covidrequired);
+
+//send a email
+/**
+ * @swagger
+ * /api/v1/sendnotification/:
  *  post:
- *    security:
- *      - bearerAuth: [] 
- *    summary: allows create a publish 
- *    tags: [publish]
+ *    summary: allow to create an email to address and their content 
+ *    tags: [email]
  *    requestBody: 
  *      required: true
  *      content:
  *          application/json:
  *              schema:
  *                type: object
- *                $ref: '#/components/schemas/publish'
+ *                $ref: '#/components/schemas/email'
  *    responses:
  *      201:
- *        description: return the info publish created
+ *        description: return success  and data with the message typed
  *        content:
  *          application/json:
  *              schema:
- *                  type: object
+ *                  type: array
  *                  items:
- *                    $ref: '#/components/schemas/publish'
- *      400:
- *        description: Some properties and/or their values are incorrect.
- *      401:
- *        description: The token wasnot delivere.
+ *                    $ref: '#/components/schemas/email'
  */
-//router.post('/', createPublishValidators, validateResult, createPublish)
-router.get('/coviddaily', covidrequired);
-
-router.post('/sendNofication', sendNotification);
+router.post('/sendnofication', sendNotification);
 module.exports = { covidRouter: router };
