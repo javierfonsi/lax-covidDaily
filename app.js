@@ -42,7 +42,7 @@ const swaggerSpec = {
               "description": "Development server"
             },
             {
-              "url":"https://lax-api-covid.herokuapp.com/",
+              "url":"https://covid-report.onrender.com/",
               "description": "Production server"
           }
         ]
